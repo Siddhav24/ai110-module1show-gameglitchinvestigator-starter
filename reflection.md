@@ -54,8 +54,11 @@ Streamlit reruns the Python script from top to bottom whenever a user interacts 
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+
 One habit I want to reuse is reproducing a bug with a small, specific input before changing the code. I will write down the expected and actual behavior, then test the same case again after the fix. This makes it easier to tell whether the change solved the original problem instead of only changing the symptoms.
 - What is one thing you would do differently next time you work with AI on a coding task?
+
 Next time, I would ask the AI to explain the relevant code before accepting a proposed fix. I would also run the tests immediately after each small change instead of waiting until several changes were complete. This would help me catch incorrect assumptions and environment problems earlier.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
 This project showed me that AI-generated code can look complete while still containing bugs in basic logic and state management. I now see AI as a useful debugging partner, but I know I must inspect its reasoning, test its suggestions, and make the final decisions myself.
