@@ -25,28 +25,34 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- [x] Describe the game's purpose.
+- [x] Detail which bugs you found.
+- [x] Explain what fixes you applied.
 
-## 📸 Demo Walkthrough
+The game's purpose is to let a player guess a randomly selected number within a difficulty-based range. The game gives higher or lower hints, tracks attempts and score, and records the guess history. I found that the hints were backwards, string comparisons could produce incorrect results, the score could change incorrectly or become negative, attempts started at the wrong value, and a new game did not reset all state. I fixed these problems by keeping comparisons numeric, moving the helper logic into `logic_utils.py`, making scoring consistent and nonnegative, starting attempts at zero, using the selected difficulty range, and resetting the complete session state for a new game.
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
+## Demo Walkthrough
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+1. The game starts with the secret stored in session state, zero attempts, a zero score, and an empty history.
+2. The user enters `40` when the secret is `60`, and the game returns `Too Low` with the hint `Go HIGHER!`.
+3. The user enters `70`, and the game returns `Too High` with the hint `Go LOWER!`.
+4. The score decreases by five points for each incorrect guess but never becomes negative, and both guesses appear in the history.
+5. The user enters `60`, the game returns `Correct!`, awards the win score, and ends the round.
+6. Selecting New Game resets the secret, attempts, score, status, and history so another round starts cleanly.
 
 ## 🧪 Test Results
 
-```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+The regular game-logic test suite passed. The optional Challenge 1 advanced edge-case tests were not completed.
+
+```text
+> .\.venv\Scripts\python.exe -m pytest tests
+============================= test session starts =============================
+platform win32 -- Python 3.14.0, pytest-9.1.1, pluggy-1.6.0
+collected 3 items
+
+tests\test_game_logic.py ...                                             [100%]
+
+============================== 3 passed in 0.03s ==============================
 ```
 
 ## 🚀 Stretch Features
