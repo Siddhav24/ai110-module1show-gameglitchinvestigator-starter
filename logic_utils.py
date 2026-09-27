@@ -1,6 +1,14 @@
+# FIXME: Use the selected difficulty range instead of a hardcoded 1-100 range.
+# Collaboration: I asked the AI to trace the difficulty bug, then chose these ranges.
 def get_range_for_difficulty(difficulty: str):
     """Return (low, high) inclusive range for a given difficulty."""
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    if difficulty == "Easy":
+        return 1, 20
+    if difficulty == "Normal":
+        return 1, 100
+    if difficulty == "Hard":
+        return 1, 50
+    return 1, 100
 
 
 def parse_guess(raw: str):
@@ -9,18 +17,42 @@ def parse_guess(raw: str):
 
     Returns: (ok: bool, guess_int: int | None, error_message: str | None)
     """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    # Collaboration: The AI suggested handling empty input before conversion.
+    if raw is None or raw == "":
+        return False, None, "Enter a guess."
+
+    try:
+        value = int(float(raw)) if "." in raw else int(raw)
+    except (TypeError, ValueError):
+        return False, None, "That is not a number."
+
+    return True, value, None
 
 
+# FIXME: Keep numeric comparisons and make the higher/lower hints match them.
+# Collaboration: The AI explained the reversed branches, and I verified them with 69 and 50.
 def check_guess(guess, secret):
     """
     Compare guess to secret and return (outcome, message).
 
     outcome examples: "Win", "Too High", "Too Low"
     """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    if guess == secret:
+        return "Win", "🎉 Correct!"
+    if guess > secret:
+        return "Too High", "📉 Go LOWER!"
+    return "Too Low", "📈 Go HIGHER!"
 
 
+# FIXME: Apply consistent scoring and prevent the score from becoming negative.
+# Collaboration: The AI found the alternating penalty, and I added the nonnegative clamp.
 def update_score(current_score: int, outcome: str, attempt_number: int):
     """Update score based on outcome and attempt number."""
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    if outcome == "Win":
+        points = max(10, 100 - 10 * attempt_number)
+        return current_score + points
+
+    if outcome in ("Too High", "Too Low"):
+        return max(0, current_score - 5)
+
+    return current_score
